@@ -1,0 +1,47 @@
+plugins {
+    id "groovy"
+    id "com.github.johnrengelman.shadow" version "6.0.0"
+    id "io.micronaut.application" version '1.0.3'
+}
+
+version "0.1"
+group "com.grananda"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+micronaut {
+    runtime "netty"
+    testRuntime "spock2"
+    processing {
+        incremental true
+        annotations "com.grananda.*"
+    }
+}
+
+dependencies {
+    compileOnly("io.micronaut.data:micronaut-data-processor")
+    compileOnly("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.groovy:micronaut-runtime-groovy")
+    implementation("javax.annotation:javax.annotation-api")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.security:micronaut-security")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("com.h2database:h2")
+}
+
+mainClassName = "com.grananda.Application"
+java {
+    sourceCompatibility = JavaVersion.toVersion('11')
+    targetCompatibility = JavaVersion.toVersion('11')
+}
+
+
+
+
