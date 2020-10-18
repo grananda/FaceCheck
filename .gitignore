@@ -1,6 +1,5 @@
 Thumbs.db
 .DS_Store
-../.gradle
 build/
 target/
 out/
@@ -12,3 +11,4 @@ out/
 .settings
 .classpath
 .factorypath
+.gradle
