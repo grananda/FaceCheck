@@ -34,6 +34,11 @@ dependencies {
     implementation("io.micronaut.security:micronaut-security-jwt")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.h2database:h2")
+    implementation("com.github.javafaker:javafaker:1.0.2")
+    compile("com.devskiller.friendly-id:friendly-id:1.1.0")
+
+    // https://mvnrepository.com/artifact/software.amazon.awssdk/rekognition
+    compile group: 'software.amazon.awssdk', name: 'rekognition', version: '2.15.9'
 }
 
 mainClassName = "com.grananda.Application"
