@@ -39,6 +39,7 @@ dependencies {
     runtimeOnly("mysql:mysql-connector-java")
     implementation("com.github.javafaker:javafaker:1.0.2")
     compile("com.devskiller.friendly-id:friendly-id:1.1.0")
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
 
     // https://mvnrepository.com/artifact/software.amazon.awssdk/rekognition
     compile group: 'software.amazon.awssdk', name: 'rekognition', version: '2.15.9'
