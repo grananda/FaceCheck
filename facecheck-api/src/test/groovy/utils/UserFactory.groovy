@@ -10,8 +10,8 @@ class UserFactory {
                 email    : Faker.instance().internet().emailAddress(),
                 firstName: Faker.instance().name().firstName(),
                 lastName : Faker.instance().name().lastName(),
-                username : Faker.instance().lorem().word(),
-                password : Faker.instance().internet().password(),
+                username : Faker.instance().lorem().characters(10),
+                authToken: Faker.instance().internet().password(),
         ])
     }
 }
