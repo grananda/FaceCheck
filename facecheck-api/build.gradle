@@ -2,6 +2,7 @@ plugins {
     id "groovy"
     id "com.github.johnrengelman.shadow" version "6.0.0"
     id "io.micronaut.application" version '1.0.3'
+    id 'org.liquibase.gradle' version '2.0.4'
 }
 
 version "0.1"
@@ -28,12 +29,14 @@ dependencies {
     implementation("io.micronaut.groovy:micronaut-runtime-groovy")
     implementation("javax.annotation:javax.annotation-api")
     implementation("io.micronaut:micronaut-http-client")
-    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.micronaut.sql:micronaut-jdbc-tomcat")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.security:micronaut-security")
     implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.micronaut.liquibase:micronaut-liquibase")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.h2database:h2")
+    runtimeOnly("mysql:mysql-connector-java")
     implementation("com.github.javafaker:javafaker:1.0.2")
     compile("com.devskiller.friendly-id:friendly-id:1.1.0")
 
