@@ -5,5 +5,5 @@ import io.micronaut.data.annotation.Repository
 import io.micronaut.data.repository.CrudRepository
 
 @Repository
-interface OrganizationRepository extends CrudRepository<Organization, UUID> {
+interface OrganizationRepository extends CrudRepository<Organization, String> {
 }

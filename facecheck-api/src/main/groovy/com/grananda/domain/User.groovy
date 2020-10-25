@@ -3,9 +3,9 @@ package com.grananda.domain
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
-import org.hibernate.annotations.Type
 import org.hibernate.annotations.UpdateTimestamp
 
+import javax.annotation.Nullable
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotNull
@@ -16,13 +16,12 @@ import java.time.OffsetDateTime
 @Table(name = "users")
 class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UUIDStringSequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StringSequence")
     @GenericGenerator(
-            name = "UUIDStringSequence",
+            name = "StringSequence",
             strategy = "com.grananda.util.UuIdStringSequenceGenerator"
     )
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     String id
 
     @Column(name = "first_name")
@@ -46,12 +45,13 @@ class User {
     @Size(min = 6, max = 50)
     String email
 
-    @Column(name = "auth_token")
+    @Column(name = "password")
     @NotNull
     @JsonIgnore
-    String authToken
+    String password
 
     @ManyToOne
+    @Nullable
     @JoinColumn(name = "organization_id")
     Organization organization
 
