@@ -11,21 +11,21 @@ import javax.validation.constraints.Size
 import java.time.OffsetDateTime
 
 @Entity
+@Table(name = "organizations")
 class Organization {
-
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UUIDStringSequence")
     @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
+            name = "UUIDStringSequence",
+            strategy = "com.grananda.util.UuIdStringSequenceGenerator"
     )
     @Type(type = "org.hibernate.type.UUIDCharType")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
-    UUID id
+    String id
 
     @Column(name = "name")
     @NotNull
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 50)
     String name
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization")
@@ -34,14 +34,12 @@ class Organization {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organization")
     Set<FaceMemoryCollection> memoryCollections = new HashSet<>()
 
-    @Version
-    Long version
-
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, name = "created_at")
     OffsetDateTime createdAt
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     OffsetDateTime updatedAt
 
     static Organization getInstance(params = [:]) {

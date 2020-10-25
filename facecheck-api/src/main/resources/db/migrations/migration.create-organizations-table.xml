@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" logicalFilePath="db.changelog-master.xml"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create-organizations-table" author="fernandez">
+        <createTable tableName="organizations">
+            <column name="id" type="varchar(25)" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="organization_id"
+                                 constraintName="fk_user_organization"
+                                 referencedTableName="organizations"
+                                 referencedColumnNames="id"
+        />
+        <rollback>
+            <dropTable tableName="organizations"/>
+            <dropForeignKeyConstraint baseTableName="users" constraintName="fk_user_organization"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

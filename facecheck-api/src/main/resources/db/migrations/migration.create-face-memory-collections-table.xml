@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" logicalFilePath="db.changelog-master.xml"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="create-face-memory-collections-table" author="fernandez">
+        <createTable tableName="face_memory_collections">
+            <column name="id" type="varchar(25)" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="collection_id" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="collection_arn" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organization_id" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="face_memory_collections"
+                                 baseColumnNames="organization_id"
+                                 constraintName="fk_face_memory_collections_organization"
+                                 referencedTableName="organizations"
+                                 referencedColumnNames="id"
+        />
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="face_memory_collections"
+                                      constraintName="fk_face_memory_collections_organization"/>
+            <dropTable tableName="face_memory_collections"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
