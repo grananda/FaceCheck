@@ -2,7 +2,6 @@ package com.grananda.domain
 
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
-import org.hibernate.annotations.Type
 import org.hibernate.annotations.UpdateTimestamp
 
 import javax.persistence.*
@@ -10,15 +9,14 @@ import javax.validation.constraints.NotNull
 import java.time.OffsetDateTime
 
 @Entity
-@Table(name = "face_memorie_collections")
+@Table(name = "face_memory_collections")
 class FaceMemoryCollection {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UUIDStringSequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StringSequence")
     @GenericGenerator(
-            name = "UUIDStringSequence",
+            name = "StringSequence",
             strategy = "com.grananda.util.UuIdStringSequenceGenerator"
     )
-    @Type(type = "org.hibernate.type.UUIDCharType")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     String id
 

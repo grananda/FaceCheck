@@ -2,7 +2,6 @@ package com.grananda.domain
 
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
-import org.hibernate.annotations.Type
 import org.hibernate.annotations.UpdateTimestamp
 
 import javax.persistence.*
@@ -13,12 +12,11 @@ import java.time.OffsetDateTime
 @Table(name = "face_memories")
 class FaceMemory {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UUIDStringSequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StringSequence")
     @GenericGenerator(
-            name = "UUIDStringSequence",
+            name = "StringSequence",
             strategy = "com.grananda.util.UuIdStringSequenceGenerator"
     )
-    @Type(type = "org.hibernate.type.UUIDCharType")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     String id
 
