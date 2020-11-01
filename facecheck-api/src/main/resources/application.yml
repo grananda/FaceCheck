@@ -11,11 +11,12 @@ micronaut:
               secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
 datasources:
   default:
-    url: "${FC_DB_URL:'jdbc:h2:file:./.db/h2/faceheck;AUTO_SERVER=TRUE;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE'}"
+    url: "${FC_DB_URL:`jdbc:h2:file:./.db/h2/facecheck;AUTO_SERVER=TRUE;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE`}"
     driverClassName: "${FC_DB_DRIVER:`org.h2.Driver`}"
     username: "${FC_DB_USER:'sa'}"
     password: "${FC_DB_PASSWORD:}"
-    schema-generate: NONE
+    dialect: "${FC_DB_DIALECT:h2}"
+    schema-generate: "${FC_DB_SCHEMAGENERATE:`create_drop`}"
 jpa:
   default:
     properties:
