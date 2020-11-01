@@ -1,39 +1,24 @@
 version: '3'
 services:
-  #  lm-backend:
-  #    build:
-  #      context: lm-backend
-  #      dockerfile: ./Dockerfile
-  #    image: license-man/backend
-  #    container_name: license-man-backend
-  #    networks:
-  #      - backend
-  #    ports:
-  #      - 8080:8080
-  #  lm-frontend:
-  #    build:
-  #      context: lm-frontend
-  #      dockerfile: ./Dockerfile
-  #    image: license-man/frontend
-  #    container_name: license-man-frontend
-  #    environment:
-  #      BASE_URL: 'http://api.licenseman.test:8000'
-  #      NUXT_ENV_API_ROUTE: /api/v1
-  #    ports:
-  #      - '3000:80'
-  #    networks:
-  #      - frontend
-  #    depends_on:
-  #      - lm-backend
-  mysql:
-    image: mysql:5.7
+  api:
+    image: facecheck-api:latest
+    container_name: facecheck-api
+    networks:
+      - api-network
+    #      - spa-network
     ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: facecheck
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-#networks:
-#  frontend: { }
-#  backend: { }
+      - 8080:8080
+#  spa:
+#    image: facecheck-spa:latest
+#    container_name: facecheck-spa
+#    ports:
+#      - '80:80'
+#    networks:
+#      - spa-network
+#    depends_on:
+#      - api
+networks:
+  #  spa-network:
+  #    driver: bridge
+  api-network:
+    driver: bridge
