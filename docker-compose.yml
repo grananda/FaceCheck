@@ -5,20 +5,20 @@ services:
     container_name: facecheck-api
     networks:
       - api-network
-    #      - spa-network
+      - spa-network
     ports:
       - 8080:8080
-#  spa:
-#    image: facecheck-spa:latest
-#    container_name: facecheck-spa
-#    ports:
-#      - '80:80'
-#    networks:
-#      - spa-network
-#    depends_on:
-#      - api
+  spa:
+    image: facecheck-spa:latest
+    container_name: facecheck-spa
+    ports:
+      - '80:80'
+    networks:
+      - spa-network
+    depends_on:
+      - api
 networks:
-  #  spa-network:
-  #    driver: bridge
+  spa-network:
+    driver: bridge
   api-network:
     driver: bridge

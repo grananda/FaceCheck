@@ -7,7 +7,7 @@ clean:
 build:
 	./gradlew assemble
 	./gradlew facecheck-api:jibDockerBuild
-	#docker build -t facecheck-spa:latest facecheck-spa/
+	docker build -t facecheck-spa:latest facecheck-spa/
 
 run:
 	docker-compose up
