@@ -16,3 +16,6 @@ liquibase:
   datasources:
     default:
       change-log: 'classpath:db/changelog-test.xml'
+facecheck:
+  debug:
+    exception-message: true
