@@ -16,7 +16,7 @@ datasources:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-    schema-generate: drop
+    schema-generate: none
     dialect: mysql
 jpa:
   default:
