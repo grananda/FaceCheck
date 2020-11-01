@@ -28,3 +28,6 @@ liquibase:
   datasources:
     default:
       change-log: 'classpath:db/changelog-master.xml'
+facecheck:
+  debug:
+    exception-message: true
