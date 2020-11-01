@@ -1,3 +1,4 @@
 rootProject.name = 'facecheck'
 
 include 'facecheck-api'
+include 'facecheck-spa'
