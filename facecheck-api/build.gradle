@@ -1,8 +1,12 @@
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+
 plugins {
     id "groovy"
     id "com.github.johnrengelman.shadow" version "6.0.0"
     id "io.micronaut.application" version '1.0.3'
     id 'org.liquibase.gradle' version '2.0.4'
+    id "com.google.cloud.tools.jib" version "1.8.0"
 }
 
 version "0.1"
@@ -50,6 +54,13 @@ java {
     sourceCompatibility = JavaVersion.toVersion('11')
     targetCompatibility = JavaVersion.toVersion('11')
 }
+
+jib.from.image = 'adoptopenjdk/openjdk11:jdk-11.0.8_10-alpine-slim'
+jib.to.image = 'facecheck-api:latest'
+jib.container.creationTime = "${OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}"
+jib.container.filesModificationTime = "${OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}"
+jib.container.ports = ['8080']
+
 
 
 
