@@ -40,6 +40,9 @@ class Organization {
     @Column(name = "updated_at")
     OffsetDateTime updatedAt
 
+    @Column(name = "deleted_at")
+    OffsetDateTime deletedAt
+
     static Organization getInstance(params = [:]) {
         return new Organization(params)
     }
