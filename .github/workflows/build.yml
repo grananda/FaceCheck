@@ -3,11 +3,9 @@ name: Facecheck continuous build
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
 on:
   push:
-    branches:
-      - '*'
-      - '!refs/tags/.*'
-    tags-ignore:
-      - '*'
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -34,6 +32,8 @@ jobs:
           architecture: x64
 
       - name: Tests
-        run: ./gradlew test
         env:
-          MICRONAUT_ENVIRONMENTS: h2-mem
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_REGION: ${{secrets.AWS_REGION}}
+        run: ./gradlew test
