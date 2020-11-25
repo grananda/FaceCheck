@@ -1,11 +1,14 @@
 package com.grananda.services
 
-import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import software.amazon.awssdk.services.rekognition.model.*
 
 import javax.inject.Inject
 
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import software.amazon.awssdk.services.rekognition.model.*
+import spock.lang.*
+
 @MicronautTest(startApplication = false)
+@Requires({ System.getenv('AWS_ACCESS_KEY_ID') && System.getenv('AWS_SECRET_ACCESS_KEY') })
 class AwsRekognitionFaceServiceImplTest extends BaseAwsRekognitionTest {
 
     @Inject
