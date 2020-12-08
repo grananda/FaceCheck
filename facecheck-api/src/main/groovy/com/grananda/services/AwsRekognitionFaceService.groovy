@@ -1,7 +1,12 @@
 package com.grananda.services
 
+import javax.inject.Singleton
+
+import groovy.transform.CompileStatic
 import software.amazon.awssdk.services.rekognition.model.*
 
+@CompileStatic
+@Singleton
 interface AwsRekognitionFaceService {
     DetectFacesResponse detectFaces(Image image)
 

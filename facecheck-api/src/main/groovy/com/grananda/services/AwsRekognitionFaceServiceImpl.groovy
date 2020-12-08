@@ -1,12 +1,10 @@
 package com.grananda.services
 
-import groovy.transform.CompileStatic
+import javax.inject.Inject
+
 import software.amazon.awssdk.services.rekognition.RekognitionClient
 import software.amazon.awssdk.services.rekognition.model.*
 
-import javax.inject.Inject
-
-@CompileStatic
 class AwsRekognitionFaceServiceImpl implements AwsRekognitionFaceService {
 
     @Inject
