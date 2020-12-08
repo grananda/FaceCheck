@@ -13,3 +13,4 @@ out/
 .factorypath
 .gradle
 !gradle/wrapper/*.jar
+/.db/
