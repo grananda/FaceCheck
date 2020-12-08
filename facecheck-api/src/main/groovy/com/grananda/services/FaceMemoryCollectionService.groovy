@@ -1,11 +1,21 @@
 package com.grananda.services
 
-import com.grananda.domain.FaceMemoryCollection
-import com.grananda.domain.Organization
+import javax.inject.Singleton
+
+import com.grananda.dto.FaceMemoryCollectionDto
 import com.grananda.exceptions.UnknownCollectionException
+import groovy.transform.CompileStatic
 
+@CompileStatic
+@Singleton
 interface FaceMemoryCollectionService {
-    FaceMemoryCollection registerFaceMemoryCollection(Organization organization, String collectionName)
+    List<FaceMemoryCollectionDto> list(String organizationId)
 
-    Boolean removeFaceMemoryCollection(FaceMemoryCollection collection) throws UnknownCollectionException
+    FaceMemoryCollectionDto describe(String id)
+
+    FaceMemoryCollectionDto update(String id, String collectionName)
+
+    FaceMemoryCollectionDto registerFaceMemoryCollection(String organizationId, String collectionName)
+
+    Boolean removeFaceMemoryCollection(String id) throws UnknownCollectionException
 }

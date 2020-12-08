@@ -10,8 +10,7 @@ class FaceMemoryCollectionFactory {
                 collectionId : UUID.randomUUID().toString(),
                 name         : Faker.instance().lorem().word(),
                 collectionArn: Faker.instance().lorem().word(),
-                faces        : new HashSet<>()
-
+                faces        : new HashSet<>(),
         ])
     }
 }
