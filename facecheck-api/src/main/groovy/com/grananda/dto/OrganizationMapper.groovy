@@ -6,7 +6,7 @@ import com.grananda.domain.Organization
 class OrganizationMapper {
 
     static OrganizationDto map(Organization organization) {
-        OrganizationDto dto = OrganizationDto.getInstance();
+        OrganizationDto dto = OrganizationDto.getInstance()
 
         dto.id = organization.id
         dto.name = organization.name

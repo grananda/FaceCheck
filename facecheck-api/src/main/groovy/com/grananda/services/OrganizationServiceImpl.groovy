@@ -1,13 +1,13 @@
 package com.grananda.services
 
+import java.time.OffsetDateTime
+import javax.inject.Inject
+
 import com.grananda.domain.Organization
 import com.grananda.dto.OrganizationDto
 import com.grananda.dto.OrganizationMapper
 import com.grananda.exceptions.NotFoundException
 import com.grananda.repositories.OrganizationRepository
-
-import javax.inject.Inject
-import java.time.OffsetDateTime
 
 class OrganizationServiceImpl implements OrganizationService {
 
@@ -16,7 +16,9 @@ class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     List<OrganizationDto> list() {
-        return organizationRepository.findAll()
+        List<Organization> organizations = organizationRepository.findAll().toList()
+
+        return organizations.collect { OrganizationMapper.map(it) }
     }
 
     @Override
@@ -30,7 +32,7 @@ class OrganizationServiceImpl implements OrganizationService {
     OrganizationDto create(Organization data) {
         Organization organization = organizationRepository.save(data)
 
-        return OrganizationMapper.map(data)
+        return OrganizationMapper.map(organization)
     }
 
     @Override

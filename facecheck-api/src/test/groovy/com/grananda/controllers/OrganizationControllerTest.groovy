@@ -1,62 +1,26 @@
 package com.grananda.controllers
 
-import com.github.javafaker.Faker
+import java.time.OffsetDateTime
+import javax.inject.Inject
+
 import com.grananda.Application
 import com.grananda.domain.Organization
-import com.grananda.domain.User
 import com.grananda.exchange.organization.*
 import com.grananda.repositories.OrganizationRepository
-import com.grananda.repositories.UserRepository
 import com.grananda.utils.ControllerAuth
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.client.HttpClient
-import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import org.jasypt.util.password.StrongPasswordEncryptor
-import spock.lang.Specification
 import utils.OrganizationFactory
-import utils.UserFactory
-
-import javax.inject.Inject
-import java.time.OffsetDateTime
 
 @MicronautTest(application = Application.class, transactional = false)
-class OrganizationControllerTest extends Specification {
+class OrganizationControllerTest extends GlobalControllerTest {
 
     final static private String ORGANIZATION_API_PREFIX = '/organizations'
 
     @Inject
-    UserRepository userRepository
-
-    @Inject
     OrganizationRepository organizationRepository
-
-    @Inject
-    StrongPasswordEncryptor strongPasswordEncryptor
-
-    String identity
-
-    String password
-
-    User user
-
-    @Inject
-    @Client('/')
-    HttpClient client
-
-    void setup() {
-        identity = Faker.instance().lorem().characters(10)
-        password = Faker.instance().internet().password()
-
-        user = UserFactory.create([
-                username: identity,
-                password: strongPasswordEncryptor.encryptPassword(password)
-        ])
-
-        userRepository.save(user)
-    }
 
     def 'an organization is requested'() {
         given: 'an organizations'
@@ -64,7 +28,7 @@ class OrganizationControllerTest extends Specification {
         organizationRepository.save(organization)
 
         when: 'an organization is requested'
-        HttpRequest request = ControllerAuth.login(HttpRequest.GET("${ORGANIZATION_API_PREFIX}/${organization.id}"), user.username, password, client)
+        HttpRequest request = get("${ORGANIZATION_API_PREFIX}/${organization.id}")
 
         HttpResponse<DescribeOrganizationResponse> response = client.toBlocking().exchange(request, DescribeOrganizationResponse.class)
 
@@ -87,7 +51,7 @@ class OrganizationControllerTest extends Specification {
         organizationRepository.save(organization2)
 
         when: 'an organization list is requested'
-        HttpRequest request = ControllerAuth.login(HttpRequest.GET("${ORGANIZATION_API_PREFIX}"), user.username, password, client)
+        HttpRequest request = get("${ORGANIZATION_API_PREFIX}")
 
         HttpResponse<ListOrganizationResponse> response = client.toBlocking().exchange(request, ListOrganizationResponse.class)
 

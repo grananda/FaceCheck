@@ -1,8 +1,8 @@
 package com.grananda.dto
 
-import io.micronaut.core.annotation.Introspected
-
 import java.time.OffsetDateTime
+
+import io.micronaut.core.annotation.Introspected
 
 @Introspected
 class OrganizationDto {
@@ -15,6 +15,6 @@ class OrganizationDto {
     OffsetDateTime updatedAt
 
     static OrganizationDto getInstance() {
-        return new OrganizationDto();
+        return new OrganizationDto()
     }
 }
