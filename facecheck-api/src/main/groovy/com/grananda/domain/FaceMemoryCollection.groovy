@@ -1,20 +1,21 @@
 package com.grananda.domain
 
+import java.time.OffsetDateTime
+import javax.persistence.*
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
+
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.UpdateTimestamp
-
-import javax.persistence.*
-import javax.validation.constraints.NotNull
-import java.time.OffsetDateTime
 
 @Entity
 @Table(name = "face_memory_collections")
 class FaceMemoryCollection {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StringSequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UUIDStringSequence")
     @GenericGenerator(
-            name = "StringSequence",
+            name = "UUIDStringSequence",
             strategy = "com.grananda.util.UuIdStringSequenceGenerator"
     )
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
@@ -22,14 +23,17 @@ class FaceMemoryCollection {
 
     @NotNull
     @Column(name = "name")
+    @Size(min = 2, max = 50)
     String name
 
     @NotNull
     @Column(name = "collection_id")
+    @Size(min = 2, max = 50)
     String collectionId
 
     @NotNull
     @Column(name = "collection_arn")
+    @Size(min = 2, max = 50)
     String collectionArn
 
     @ManyToOne
@@ -49,5 +53,10 @@ class FaceMemoryCollection {
 
     static FaceMemoryCollection getInstance(params = [:]) {
         return new FaceMemoryCollection(params)
+    }
+
+    void addOrganization(Organization organization) {
+        this.organization = organization
+        organization.memoryCollections.add(this)
     }
 }
