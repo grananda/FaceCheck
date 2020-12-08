@@ -1,5 +1,6 @@
 package com.grananda.exchange.organization
 
+
 import com.grananda.dto.OrganizationDto
 import groovy.transform.CompileStatic
 
