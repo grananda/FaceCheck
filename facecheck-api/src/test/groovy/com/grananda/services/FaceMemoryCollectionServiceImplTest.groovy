@@ -50,7 +50,7 @@ class FaceMemoryCollectionServiceImplTest extends Specification {
         faceMemoryCollectionRepository.save(collection)
 
         when: 'a collection is requested'
-        FaceMemoryCollectionDto response = service.describe(collection.id)
+        FaceMemoryCollection response = service.describe(collection.id)
 
         then: 'the desired collection is retrieved'
         response.id == collection.id
@@ -98,7 +98,7 @@ class FaceMemoryCollectionServiceImplTest extends Specification {
         String collectionName = Faker.instance().lorem().word()
 
         when: 'a collection is updated'
-        FaceMemoryCollectionDto response = service.update(collection.id, collectionName)
+        FaceMemoryCollection response = service.update(collection.id, collectionName)
 
         then: 'the desired collection is retrieved'
         response.id == collection.id
@@ -126,7 +126,7 @@ class FaceMemoryCollectionServiceImplTest extends Specification {
                 .build() as CreateCollectionResponse;
 
         when: 'a face memory collection is registered'
-        FaceMemoryCollectionDto collection = service.registerFaceMemoryCollection(organization.id, collectionName);
+        FaceMemoryCollection collection = service.registerFaceMemoryCollection(organization.id, collectionName);
 
         then: 'the following mocked interactions occur'
         1 * awsRekognitionCollectionService.createFaceMemoryCollection(_) >> createCollectionResponse

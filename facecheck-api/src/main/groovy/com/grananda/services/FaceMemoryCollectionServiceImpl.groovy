@@ -5,13 +5,12 @@ import javax.transaction.Transactional
 
 import com.grananda.domain.FaceMemoryCollection
 import com.grananda.domain.Organization
-import com.grananda.dto.FaceMemoryCollectionDto
-import com.grananda.dto.FaceMemoryCollectionMapper
 import com.grananda.exceptions.NotFoundException
 import com.grananda.exceptions.UnknownCollectionException
 import com.grananda.repositories.FaceMemoryCollectionRepository
 import com.grananda.repositories.OrganizationRepository
 import groovy.util.logging.Slf4j
+import io.micronaut.transaction.annotation.ReadOnly
 import software.amazon.awssdk.services.rekognition.model.CreateCollectionResponse
 import software.amazon.awssdk.services.rekognition.model.DeleteCollectionResponse
 import software.amazon.awssdk.services.rekognition.model.ResourceNotFoundException
@@ -35,35 +34,35 @@ class FaceMemoryCollectionServiceImpl implements FaceMemoryCollectionService {
     UuIdGeneratorService uuIdGeneratorService
 
     @Override
-    @Transactional
-    List<FaceMemoryCollectionDto> list(String organizationId) {
+    @ReadOnly
+    List<FaceMemoryCollection> list(String organizationId) {
         List<FaceMemoryCollection> collections = faceMemoryCollectionRepository.findAllByOrganizationId(organizationId).toList()
 
-        return collections.collect { FaceMemoryCollectionMapper.map(it) }
+        return collections
+    }
+
+    @Override
+    @ReadOnly
+    FaceMemoryCollection describe(String id) {
+        FaceMemoryCollection faceMemoryCollection = getFaceMemoryCollection(id)
+
+        return faceMemoryCollection
     }
 
     @Override
     @Transactional
-    FaceMemoryCollectionDto describe(String id) {
-        FaceMemoryCollection collection = getFaceMemoryCollection(id)
-
-        return FaceMemoryCollectionMapper.map(collection)
-    }
-
-    @Override
-    @Transactional
-    FaceMemoryCollectionDto update(String id, String collectionName) {
+    FaceMemoryCollection update(String id, String collectionName) {
         FaceMemoryCollection collection = getFaceMemoryCollection(id)
 
         collection.name = collectionName
         collection = faceMemoryCollectionRepository.update(collection)
 
-        return FaceMemoryCollectionMapper.map(collection)
+        return collection
     }
 
     @Override
     @Transactional
-    FaceMemoryCollectionDto registerFaceMemoryCollection(String organizationId, String collectionName) {
+    FaceMemoryCollection registerFaceMemoryCollection(String organizationId, String collectionName) {
         Organization organization = organizationRepository.findById(organizationId).orElse(null)
 
         if (!organization)
@@ -84,7 +83,7 @@ class FaceMemoryCollectionServiceImpl implements FaceMemoryCollectionService {
 
         faceMemoryCollection = faceMemoryCollectionRepository.save(faceMemoryCollection)
 
-        return FaceMemoryCollectionMapper.map(faceMemoryCollection)
+        return faceMemoryCollection
     }
 
     @Override
