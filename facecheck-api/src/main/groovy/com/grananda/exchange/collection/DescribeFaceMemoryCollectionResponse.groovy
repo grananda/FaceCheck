@@ -2,7 +2,9 @@ package com.grananda.exchange.collection
 
 import javax.inject.Singleton
 
+import com.grananda.domain.FaceMemoryCollection
 import com.grananda.dto.FaceMemoryCollectionDto
+import com.grananda.dto.FaceMemoryCollectionMapper
 import groovy.transform.CompileStatic
 
 @CompileStatic
@@ -13,11 +15,11 @@ class DescribeFaceMemoryCollectionResponse {
     DescribeFaceMemoryCollectionResponse() {
     }
 
-    DescribeFaceMemoryCollectionResponse(FaceMemoryCollectionDto collection) {
-        this.collection = collection
+    DescribeFaceMemoryCollectionResponse(FaceMemoryCollection collection) {
+        this.collection = FaceMemoryCollectionMapper.map(collection)
     }
 
-    static getInstance(FaceMemoryCollectionDto collection) {
+    static getInstance(FaceMemoryCollection collection) {
         return new DescribeFaceMemoryCollectionResponse(collection)
     }
 }
