@@ -2,12 +2,12 @@ package com.grananda.services
 
 import java.time.OffsetDateTime
 import javax.inject.Inject
+import javax.transaction.Transactional
 
 import com.grananda.domain.Organization
-import com.grananda.dto.OrganizationDto
-import com.grananda.dto.OrganizationMapper
 import com.grananda.exceptions.NotFoundException
 import com.grananda.repositories.OrganizationRepository
+import io.micronaut.transaction.annotation.ReadOnly
 
 class OrganizationServiceImpl implements OrganizationService {
 
@@ -15,28 +15,32 @@ class OrganizationServiceImpl implements OrganizationService {
     OrganizationRepository organizationRepository
 
     @Override
-    List<OrganizationDto> list() {
+    @ReadOnly
+    List<Organization> list() {
         List<Organization> organizations = organizationRepository.findAll().toList()
 
-        return organizations.collect { OrganizationMapper.map(it) }
+        return organizations
     }
 
     @Override
-    OrganizationDto describe(String id) {
+    @ReadOnly
+    Organization describe(String id) {
         Organization organization = getOrganization(id)
 
-        return OrganizationMapper.map(organization)
+        return organization
     }
 
     @Override
-    OrganizationDto create(Organization data) {
+    @Transactional
+    Organization create(Organization data) {
         Organization organization = organizationRepository.save(data)
 
-        return OrganizationMapper.map(organization)
+        return organization
     }
 
     @Override
-    OrganizationDto update(String id, Organization data) {
+    @Transactional
+    Organization update(String id, Organization data) {
         Organization organization = getOrganization(id)
 
         Organization entity = data
@@ -44,10 +48,11 @@ class OrganizationServiceImpl implements OrganizationService {
 
         entity = organizationRepository.update(entity)
 
-        return OrganizationMapper.map(entity)
+        return entity
     }
 
     @Override
+    @Transactional
     void delete(String id) {
         Organization organization = getOrganization(id)
         organization.deletedAt = OffsetDateTime.now()
@@ -56,6 +61,7 @@ class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    @Transactional
     void restore(String id) {
         Organization organization = getOrganization(id)
         organization.deletedAt = null

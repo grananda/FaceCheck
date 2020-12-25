@@ -1,8 +1,9 @@
 package com.grananda.controllers
 
 import javax.inject.Inject
+import javax.transaction.Transactional
 
-import com.grananda.dto.OrganizationDto
+import com.grananda.domain.Organization
 import com.grananda.exchange.organization.*
 import com.grananda.services.OrganizationService
 import io.micronaut.http.HttpResponse
@@ -18,29 +19,33 @@ class OrganizationController {
     OrganizationService organizationService
 
     @Get('/')
+    @Transactional
     HttpResponse<ListOrganizationResponse> index() {
-        List<OrganizationDto> organizations = organizationService.list()
+        List<Organization> organizations = organizationService.list()
 
         return HttpResponse.ok(ListOrganizationResponse.getInstance(organizations))
     }
 
     @Get('/{id}')
+    @Transactional
     HttpResponse<DescribeOrganizationResponse> show(@PathVariable String id) {
-        OrganizationDto organization = organizationService.describe(id)
+        Organization organization = organizationService.describe(id)
 
         return HttpResponse.ok(DescribeOrganizationResponse.getInstance(organization))
     }
 
     @Post('/')
+    @Transactional
     HttpResponse<DescribeOrganizationResponse> save(@Body CreateOrganizationRequest request) {
-        OrganizationDto organization = organizationService.create(request.organization)
+        Organization organization = organizationService.create(request.organization)
 
         return HttpResponse.created(DescribeOrganizationResponse.getInstance(organization))
     }
 
     @Put('/{id}')
+    @Transactional
     HttpResponse<DescribeOrganizationResponse> update(@PathVariable String id, @Body UpdateOrganizationRequest request) {
-        OrganizationDto organization = organizationService.update(id, request.organization)
+        Organization organization = organizationService.update(id, request.organization)
 
         return HttpResponse.ok(DescribeOrganizationResponse.getInstance(organization))
     }
