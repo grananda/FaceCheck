@@ -1,15 +1,14 @@
 package com.grananda.services
 
+import java.time.OffsetDateTime
+import javax.inject.Inject
+
 import com.grananda.Application
 import com.grananda.domain.Organization
-import com.grananda.dto.OrganizationDto
 import com.grananda.repositories.OrganizationRepository
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import spock.lang.Specification
+import spock.lang.*
 import utils.OrganizationFactory
-
-import javax.inject.Inject
-import java.time.OffsetDateTime
 
 @MicronautTest(application = Application.class, startApplication = false)
 class OrganizationServiceImplTest extends Specification {
@@ -28,7 +27,7 @@ class OrganizationServiceImplTest extends Specification {
         organizations.each { organizationRepository.save(it) }
 
         when: 'a list of all organizations is requested'
-        List<OrganizationDto> response = organizationService.list();
+        List<Organization> response = organizationService.list();
 
         then: 'all created organizations were returned'
         response.size() == listSize
@@ -41,7 +40,7 @@ class OrganizationServiceImplTest extends Specification {
         organization = organizationRepository.save(organization)
 
         when: 'an organization is described'
-        OrganizationDto response = organizationService.describe(organization.id)
+        Organization response = organizationService.describe(organization.id)
 
         then: 'the created organization is requested'
         response.id == organization.id
@@ -52,7 +51,7 @@ class OrganizationServiceImplTest extends Specification {
         Organization organization = OrganizationFactory.create()
 
         when: 'it is persisted through the proper service'
-        OrganizationDto response = organizationService.create(organization)
+        Organization response = organizationService.create(organization)
 
         then: 'the returned object matches the original'
         response.name == organization.name
@@ -71,7 +70,7 @@ class OrganizationServiceImplTest extends Specification {
         Organization organizationData = OrganizationFactory.create()
 
         when: 'it is update through the proper service'
-        OrganizationDto response = organizationService.update(organization.id, organizationData)
+        Organization response = organizationService.update(organization.id, organizationData)
 
         then: 'the organization is modified'
         response.id == organization.id
