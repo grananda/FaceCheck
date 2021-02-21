@@ -12,6 +12,7 @@ class OrganizationMapper {
         dto.name = organization.name
         dto.createdAt = organization.createdAt
         dto.updatedAt = organization.updatedAt
+        dto.deletedAt = organization.deletedAt
 
         return dto
     }

@@ -14,6 +14,8 @@ class OrganizationDto {
 
     OffsetDateTime updatedAt
 
+    OffsetDateTime deletedAt
+
     static OrganizationDto getInstance() {
         return new OrganizationDto()
     }
