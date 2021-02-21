@@ -13,7 +13,7 @@
             <column name="collection_id" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="collection_arn" type="varchar(50)">
+            <column name="collection_arn" type="varchar(250)">
                 <constraints nullable="false"/>
             </column>
             <column name="organization_id" type="varchar(25)">

@@ -33,7 +33,7 @@ class FaceMemoryCollection {
 
     @NotNull
     @Column(name = "collection_arn")
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 250)
     String collectionArn
 
     @ManyToOne
