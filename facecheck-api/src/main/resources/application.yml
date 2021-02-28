@@ -1,6 +1,10 @@
 micronaut:
   application:
     name: facecheck
+  server:
+    max-request-size: '100MB'
+    multipart:
+      max-file-size: '100MB'
   security:
     authentication: bearer
     token:
