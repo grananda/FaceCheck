@@ -11,4 +11,6 @@ import io.micronaut.data.repository.CrudRepository
 interface UserRepository extends CrudRepository<User, String> {
     @Executable
     User findByUsernameOrEmail(String username, String email)
+
+    Optional<User> findByEmail(String username)
 }
